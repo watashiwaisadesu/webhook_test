@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webhook Display</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    #webhook-data {
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      width: 80%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: #f9f9f9;
-    }
-  </style>
+  <title>Instagram Business Login</title>
 </head>
 <body>
-  <h1>Webhook Data</h1>
-  <div id="webhook-data">Waiting for webhook...</div>
+  <h1>Instagram Business Login</h1>
+  <p>
+    Click the button below to log in to Instagram and authorize the app.
+  </p>
+  <a href="https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=2894531324053249&redirect_uri=https://islambek.netlify.app/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish" target="_blank">
+    <button>Login with Instagram</button>
+  </a>
 
-  <script src="script.js"></script>
+  <h2>Received Code</h2>
+  <p id="auth-code">Waiting for code...</p>
+
+  <script>
+    // Extract the "code" parameter from the URL after redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    // Display the code if present
+    if (code) {
+      document.getElementById('auth-code').textContent = `Authorization Code: ${code}`;
+    } else {
+      document.getElementById('auth-code').textContent = 'No code found. Please log in and authorize the app.';
+    }
+  </script>
 </body>
 </html>
