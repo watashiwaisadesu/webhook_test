@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram Business Login</title>
+    <title>Instagram OAuth Redirect</title>
 </head>
 <body>
-  <h1>Instagram Business Login</h1>
-  <p>
-    Click the button below to log in to Instagram and authorize the app.
-  </p>
-  <a href="https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=2894531324053249&redirect_uri=https://webhooktestsss.netlify.app/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish" target="_blank">
-    <button>Login with Instagram</button>
-  </a>
+    <script>
+        // Extract the code from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
 
-  <h2>Received Code</h2>
-  <p id="auth-code">Waiting for code...</p>
-
-  <script>
-    // Extract the "code" parameter from the URL after redirect
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-    // Display the code if present
-    if (code) {
-      document.getElementById('auth-code').textContent = `Authorization Code: ${code}`;
-    } else {
-      document.getElementById('auth-code').textContent = 'No code found. Please log in and authorize the app.';
-    }
-  </script>
+        if (code) {
+            // Send the code to your backend
+            fetch('https://your-backend-domain.com/handle_code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Integration successful:', data);
+                // Inform the user that the integration was successful
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        } else {
+            console.error('No code found in the URL');
+        }
+    </script>
 </body>
 </html>
